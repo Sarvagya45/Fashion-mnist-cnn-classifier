@@ -2,7 +2,7 @@
 
 An end-to-end Machine Learning project featuring a Convolutional Neural Network (CNN) built with PyTorch to classify images from the [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset into 10 clothing categories. The project includes a Jupyter notebook for model training, a Streamlit-powered web application for real-time inference, and Docker configuration for easy deployment. 
 
-**🎉 Live Demo**: [Deployed on Render](https://your-render-url.onrender.com) *(Update with your actual Render URL)*
+**🎉 Live Demo**: [Deployed on Render](https://fashion-mnist-cnn-classifier-cc61.onrender.com) *(Update with your actual Render URL)*
 
 ---
 
