@@ -1,99 +1,95 @@
-# CNN Fashion MNIST Classifier — PyTorch
+# CNN Fashion MNIST Classifier — PyTorch & Streamlit
 
-A Convolutional Neural Network (CNN) built with PyTorch to classify images from the [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset into 10 clothing categories.
+An end-to-end Machine Learning project featuring a Convolutional Neural Network (CNN) built with PyTorch to classify images from the [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) dataset into 10 clothing categories. The project includes a Jupyter notebook for model training, a Streamlit-powered web application for real-time inference, and Docker configuration for easy deployment. 
+
+**🎉 Live Demo**: [Deployed on Render](https://your-render-url.onrender.com) *(Update with your actual Render URL)*
 
 ---
 
 ## 📌 Project Overview
 
-This project trains a CNN on the Fashion MNIST dataset to recognize grayscale 28×28 images of fashion items. The model is trained end-to-end in a Jupyter Notebook using PyTorch, with GPU acceleration support via CUDA.
+This project demonstrates the complete ML lifecycle:
+1. **Model Training**: Training a CNN on the Fashion MNIST dataset using PyTorch with GPU acceleration.
+2. **Web Interface**: Building an interactive web frontend using Streamlit to allow users to upload images and get predictions.
+3. **Deployment**: Containerizing the application using Docker and deploying it seamlessly to Render.
 
 ---
 
-## 🗂️ Dataset
+## 🗂️ Dataset & Class Labels
 
-The dataset used is the **Fashion MNIST** dataset in CSV format, where:
-- Each row represents one image.
-- The first column is the **label** (class index 0–9).
-- The remaining 784 columns are **pixel values** (pixel1 to pixel784), representing a flattened 28×28 grayscale image.
+The dataset used is the **Fashion MNIST** dataset, which consists of grayscale 28×28 images of fashion items.
 
-### Class Labels
-
-| Label | Category       |
-|-------|----------------|
-| 0     | T-shirt/top    |
-| 1     | Trouser        |
-| 2     | Pullover       |
-| 3     | Dress          |
-| 4     | Coat           |
-| 5     | Sandal         |
-| 6     | Shirt          |
-| 7     | Sneaker        |
-| 8     | Bag            |
-| 9     | Ankle boot     |
+| Label | Category       | Label | Category       |
+|-------|----------------|-------|----------------|
+| 0     | T-shirt/top    | 5     | Sandal         |
+| 1     | Trouser        | 6     | Shirt          |
+| 2     | Pullover       | 7     | Sneaker        |
+| 3     | Dress          | 8     | Bag            |
+| 4     | Coat           | 9     | Ankle boot     |
 
 ---
 
 ## 🧠 Model Architecture
 
-The CNN consists of:
-- **Convolutional layers** for spatial feature extraction
-- **Max Pooling layers** for downsampling
-- **Fully Connected layers** for classification
-- **ReLU activations** throughout
-- **Softmax/CrossEntropyLoss** for multi-class output
+The CNN is built from scratch and consists of:
+- **Convolutional layers** for spatial feature extraction.
+- **Max Pooling layers** for downsampling.
+- **Fully Connected layers** for final classification into 10 distinct classes.
+- **ReLU activations** and **CrossEntropyLoss**.
 
 ---
 
 ## ⚙️ Tech Stack
 
-| Tool         | Purpose                          |
-|--------------|----------------------------------|
-| Python 3     | Programming language             |
-| PyTorch      | Deep learning framework          |
-| pandas       | Data loading and manipulation    |
-| scikit-learn | Train/test splitting             |
-| matplotlib   | Visualization                    |
-| CUDA (GPU)   | Accelerated training (if available) |
+| Component      | Tools & Frameworks                           |
+|----------------|----------------------------------------------|
+| **Deep Learning** | PyTorch, Torchvision                       |
+| **Frontend/UI** | Streamlit                                    |
+| **Data Tools**  | Pandas, NumPy, Scikit-learn, Matplotlib, PIL |
+| **Deployment**  | Docker, Render                               |
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Clone the Repository
+### Prerequisites
+Make sure you have Python 3.11+ installed. For GPU support during training, install the appropriate CUDA-compatible version of PyTorch.
 
+### 1. Clone the Repository
 ```bash
 git clone https://github.com/your-username/cnn-fashion-mnist-pytorch.git
 cd cnn-fashion-mnist-pytorch
 ```
 
-### 2. Install Dependencies
+### 2. Local Setup (Without Docker)
 
+Navigate to the `app` directory and install the required packages:
 ```bash
-pip install torch torchvision pandas scikit-learn matplotlib
+cd app
+pip install -r requirements.txt
 ```
 
-> For GPU support, install the appropriate CUDA-compatible version of PyTorch from [pytorch.org](https://pytorch.org/get-started/locally/).
-
-### 3. Add the Dataset
-
-Download the Fashion MNIST CSV dataset (e.g., from [Kaggle](https://www.kaggle.com/datasets/zalando-research/fashionmnist)) and place it in the project directory.
-
-### 4. Run the Notebook
-
-Open and run the notebook in Jupyter or Google Colab:
-
+Run the Streamlit application:
 ```bash
-jupyter notebook cnn-fashion-mnist-pytorch.ipynb
+streamlit run main.py
+```
+The app will be accessible at `http://localhost:8501`.
+
+### 3. Running with Docker
+
+You can also run the application locally using Docker. This ensures a consistent environment matching the deployment on Render.
+
+Build the Docker image:
+```bash
+cd app
+docker build -t fashion-mnist-app .
 ```
 
----
-
-## 📊 Results
-
-The model is trained with a fixed random seed (`torch.manual_seed(42)`) to ensure reproducibility. Training automatically uses GPU (`cuda`) if available, otherwise falls back to CPU.
-
-> Training accuracy and loss curves are plotted using `matplotlib` within the notebook.
+Run the Docker container:
+```bash
+docker run -p 8501:8501 fashion-mnist-app
+```
+Access the application at `http://localhost:8501`.
 
 ---
 
@@ -102,11 +98,20 @@ The model is trained with a fixed random seed (`torch.manual_seed(42)`) to ensur
 ```
 cnn-fashion-mnist-pytorch/
 │
-├── cnn-fashion-mnist-pytorch.ipynb   # Main notebook
 ├── README.md                          # Project documentation
-└── data/                              # Place Fashion MNIST CSV files here
-    ├── fashion-mnist_train.csv
-    └── fashion-mnist_test.csv
+├── app/                               # Streamlit Web Application
+│   ├── Dockerfile                     # Docker configuration
+│   ├── main.py                        # Streamlit frontend & inference logic
+│   ├── model.py                       # PyTorch model architecture class
+│   ├── requirements.txt               # App dependencies
+│   ├── config.toml                    # Streamlit configuration
+│   └── trained_model/                 # Saved PyTorch model checkpoint (.pth)
+│
+├── model_training_notebook/           # Training scripts and notebooks
+│   └── ...
+│
+└── test_images/                       # Sample images for testing the UI
+    └── ...
 ```
 
 ---
